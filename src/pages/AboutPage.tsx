@@ -77,8 +77,8 @@ const fileLines: Record<ActiveFile, string[]> = {
 
 const snippets = [
   {
-    username: "@username",
-    created: "Created 5 months ago",
+    username: "@kyleallbright",
+    created: "Created 1 month ago",
     stars: 3,
     starred: true,
     code: `export function initializeModelChunk<T>(
@@ -96,8 +96,8 @@ const snippets = [
 }`,
   },
   {
-    username: "@username",
-    created: "Created 9 months ago",
+    username: "@kyleallbright",
+    created: "Created 3 months ago",
     stars: 0,
     starred: false,
     code: `export function parseModelTuple(
