@@ -62,7 +62,7 @@ const fileLines: Record<ActiveFile, string[]> = {
     " * Deep expertise in React/Next.js (frontend) and C#/.NET + Node.js (backend)",
     " * Experienced building SaaS products, internal tools, dashboards, and scalable web applications",
     " * Obsessed with writing maintainable code, optimizing performance, and creating smooth user experiences",
-    " * ooking for long-term partnerships where I can contribute consistently and help products grow",
+    " * Looking for long-term partnerships where I can contribute consistently and help products grow",
     " */",
   ],
   interests: [
