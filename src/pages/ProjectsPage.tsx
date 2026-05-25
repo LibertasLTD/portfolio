@@ -1,13 +1,8 @@
 import { useState } from "react";
+import Nav from "../components/Nav";
 import type { Page } from "../types";
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
-
-const XIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
 
 const LinkedInIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -87,7 +82,7 @@ const techList = [
   { id: "react",   label: "React",   Icon: ReactLogo },
   { id: "html",    label: "HTML",    Icon: HTMLLogo },
   { id: "css",     label: "CSS",     Icon: CSSLogo },
-  { id: "node",    label: "Node",   Icon: VueLogo },
+  { id: "node",    label: "Node",    Icon: VueLogo },
   { id: "angular", label: "Angular", Icon: AngularLogo },
   { id: "gatsby",  label: "Gatsby",  Icon: GatsbyLogo },
   { id: "flutter", label: "Flutter", Icon: FlutterLogo },
@@ -140,6 +135,7 @@ interface Props {
 export default function ProjectsPage({ onNavigate }: Props) {
   const [selected, setSelected] = useState<TechId[]>([]);
   const [sectionOpen, setSectionOpen] = useState(true);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const toggle = (id: TechId) =>
     setSelected((prev) =>
@@ -166,46 +162,58 @@ export default function ProjectsPage({ onNavigate }: Props) {
         className="min-h-screen bg-[#010C15] text-white flex flex-col"
         style={{ fontFamily: "'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace" }}
       >
-        {/* ── Nav ──────────────────────────────────────────────────────────── */}
-        <nav className="flex items-stretch border-b border-[#1E2D3D] text-sm shrink-0">
-          <div className="px-6 py-5 border-r border-[#1E2D3D] flex items-center">
-            <span className="text-[#607B96]">michael-weaver</span>
+        <Nav activePage="projects" onNavigate={onNavigate} />
+
+        <main className="flex-1 flex flex-col md:flex-row min-h-0">
+
+          {/* ── Mobile filter panel (below md) ──────────────────────────────── */}
+          <div className="md:hidden border-b border-[#1E2D3D] shrink-0 text-sm">
+            <button
+              onClick={() => setMobileFiltersOpen((v) => !v)}
+              className="w-full flex items-center justify-between px-5 py-3 text-[#607B96] hover:text-white transition-colors"
+              aria-expanded={mobileFiltersOpen}
+            >
+              <span className="flex items-center gap-2">
+                {mobileFiltersOpen ? <ChevronDown /> : <ChevronRight />}
+                projects
+                {selected.length > 0 && (
+                  <span className="text-xs text-[#43D9AD]">({selected.length})</span>
+                )}
+              </span>
+              {selected.length > 0 && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); setSelected([]); }}
+                  className="text-xs text-[#607B96] hover:text-white transition-colors"
+                >
+                  clear
+                </button>
+              )}
+            </button>
+            {mobileFiltersOpen && (
+              <div className="flex flex-wrap gap-2 px-5 pb-4">
+                {techList.map(({ id, label, Icon }) => {
+                  const checked = selected.includes(id);
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => toggle(id)}
+                      className="flex items-center gap-2 px-3 py-2 border text-xs transition-colors"
+                      style={{
+                        borderColor: checked ? "#607B96" : "#1E2D3D",
+                        color: checked ? "#ffffff" : "#607B96",
+                        background: checked ? "#1E2D3D" : "transparent",
+                      }}
+                    >
+                      <Icon />
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          <div className="flex items-stretch">
-            <button
-              onClick={() => onNavigate("home")}
-              className="px-6 py-5 text-[#607B96] border-r border-[#1E2D3D] hover:text-white transition-colors"
-            >
-              _hello
-            </button>
-            <button
-              onClick={() => onNavigate("about")}
-              className="hidden sm:flex items-center px-6 py-5 text-[#607B96] border-r border-[#1E2D3D] hover:text-white transition-colors"
-            >
-              _about-me
-            </button>
-            <button
-              onClick={() => onNavigate("projects")}
-              className="hidden sm:flex items-center px-6 py-5 text-white border-r border-[#1E2D3D]"
-              style={{ borderBottom: "2px solid #FEA55F", marginBottom: -1 }}
-            >
-              _projects
-            </button>
-          </div>
-
-          <button
-            onClick={() => onNavigate("contact")}
-            className="hidden md:flex items-center ml-auto px-6 py-5 text-[#607B96] border-l border-[#1E2D3D] hover:text-white transition-colors"
-          >
-            _contact-me
-          </button>
-        </nav>
-
-        {/* ── Main ─────────────────────────────────────────────────────────── */}
-        <main className="flex-1 flex min-h-0">
-
-          {/* Filter sidebar */}
+          {/* ── Desktop filter sidebar (md+) ────────────────────────────────── */}
           <aside className="hidden md:flex flex-col w-[220px] shrink-0 border-r border-[#1E2D3D] overflow-y-auto text-sm">
             <button
               onClick={() => setSectionOpen((v) => !v)}
@@ -226,7 +234,6 @@ export default function ProjectsPage({ onNavigate }: Props) {
                       className="w-full flex items-center gap-3 pl-5 pr-4 py-[7px] hover:text-white transition-colors text-left"
                       style={{ color: checked ? "#ffffff" : "#607B96" }}
                     >
-                      {/* Custom checkbox */}
                       <span
                         className="inline-flex items-center justify-center w-[14px] h-[14px] shrink-0 border"
                         style={{
@@ -256,17 +263,17 @@ export default function ProjectsPage({ onNavigate }: Props) {
             )}
           </aside>
 
-          {/* Project grid area */}
+          {/* ── Project grid area ───────────────────────────────────────────── */}
           <div className="flex-1 flex flex-col min-h-0">
 
             {/* Tab bar */}
             <div className="flex items-stretch border-b border-[#1E2D3D] shrink-0 min-h-[46px]">
               {selected.length > 0 && (
                 <div className="flex items-center gap-4 px-5 py-3 border-r border-[#1E2D3D] text-sm">
-                  <span className="text-[#607B96]">{tabLabel}</span>
+                  <span className="text-[#607B96] truncate max-w-[160px] sm:max-w-none">{tabLabel}</span>
                   <button
                     onClick={() => setSelected([])}
-                    className="text-[#607B96] hover:text-white transition-colors leading-none text-base"
+                    className="text-[#607B96] hover:text-white transition-colors leading-none text-base shrink-0"
                   >
                     ×
                   </button>
@@ -275,20 +282,18 @@ export default function ProjectsPage({ onNavigate }: Props) {
             </div>
 
             {/* Cards */}
-            <div className="flex-1 overflow-auto p-8 lg:p-10">
+            <div className="flex-1 overflow-auto p-5 sm:p-8 lg:p-10">
               {filtered.length === 0 ? (
                 <p className="text-[#607B96] text-sm">
                   // no projects match the selected filters
                 </p>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-5xl">
                   {filtered.map((project) => (
                     <div key={project.num}>
                       {/* Title above card */}
                       <p className="text-sm mb-3">
-                        <span style={{ color: "#FEA55F" }}>
-                          Project {project.num}
-                        </span>
+                        <span style={{ color: "#FEA55F" }}>Project {project.num}</span>
                         <span className="text-[#607B96]"> // </span>
                         <span style={{ color: "#43D9AD" }}>{project.slug}</span>
                       </p>
@@ -299,11 +304,7 @@ export default function ProjectsPage({ onNavigate }: Props) {
                         style={{ background: "#011221" }}
                       >
                         {/* Image area */}
-                        <div
-                          className="relative h-[170px]"
-                          style={project.imageStyle}
-                        >
-                          {/* Tech badge */}
+                        <div className="relative h-[160px] sm:h-[170px]" style={project.imageStyle}>
                           <div
                             className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center border border-[#1E2D3D]"
                             style={{ background: "rgba(1,18,33,0.75)", backdropFilter: "blur(4px)" }}
@@ -313,11 +314,11 @@ export default function ProjectsPage({ onNavigate }: Props) {
                         </div>
 
                         {/* Content */}
-                        <div className="p-5">
-                          <p className="text-[#607B96] text-sm mb-5 leading-relaxed">
+                        <div className="p-4 sm:p-5">
+                          <p className="text-[#607B96] text-sm mb-4 sm:mb-5 leading-relaxed">
                             {project.description}
                           </p>
-                          <button className="px-4 py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors">
+                          <button className="px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors">
                             view-project
                           </button>
                         </div>
@@ -333,15 +334,13 @@ export default function ProjectsPage({ onNavigate }: Props) {
         {/* ── Footer ───────────────────────────────────────────────────────── */}
         <footer className="flex items-center gap-5 px-6 py-4 border-t border-[#1E2D3D] text-sm shrink-0">
           <span className="text-[#607B96]">find me in:</span>
-          <div className="flex items-center gap-2">
-            <a
-              href="#"
-              aria-label="LinkedIn"
-              className="text-[#607B96] hover:text-white transition-colors border border-[#1E2D3D] p-[9px] hover:border-[#607B96]"
-            >
-              <LinkedInIcon />
-            </a>
-          </div>
+          <a
+            href="#"
+            aria-label="LinkedIn"
+            className="text-[#607B96] hover:text-white transition-colors border border-[#1E2D3D] p-[9px] hover:border-[#607B96]"
+          >
+            <LinkedInIcon />
+          </a>
         </footer>
       </div>
     </>
