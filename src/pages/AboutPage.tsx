@@ -276,7 +276,7 @@ export default function AboutPage({ onNavigate }: Props) {
                   <div className="flex text-sm py-4 sm:py-5">
                     {/* Line numbers */}
                     <div
-                      className="shrink-0 select-none text-right pr-4 pl-4 sm:pr-5 sm:pl-5 text-[#607B96]"
+                      className="hidden md:block shrink-0 select-none text-right pr-4 pl-4 sm:pr-5 sm:pl-5 text-[#607B96]"
                       style={{ opacity: 0.4, minWidth: "3rem" }}
                     >
                       {fileLines[activeFile].map((_, i) => (
@@ -286,11 +286,11 @@ export default function AboutPage({ onNavigate }: Props) {
                       ))}
                     </div>
                     {/* Code lines */}
-                    <div className="text-[#607B96] pr-4 sm:pr-6">
+                    <div className="text-[#607B96] pr-4 sm:pr-6 text-center md:text-left w-full md:w-auto">
                       {fileLines[activeFile].map((line, i) => (
                         <div
                           key={i}
-                          style={{ lineHeight: "1.75rem", whiteSpace: "pre" }}
+                          style={{ lineHeight: "1.75rem", whiteSpace: "pre-wrap" }}
                         >
                           {line || " "}
                         </div>
