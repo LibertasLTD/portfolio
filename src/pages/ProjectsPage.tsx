@@ -1,6 +1,52 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Nav from "../components/Nav";
 import type { Page } from "../types";
+import odeumPhoto from "../../img/odeum-photo.jpeg";
+import kanbanApp from "../../img/kanban-app.png";
+
+// ── Lightbox ───────────────────────────────────────────────────────────────────
+
+function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+      style={{ background: "rgba(1,12,21,0.92)", backdropFilter: "blur(6px)", animation: "lb-fade-in 0.2s ease" }}
+      onClick={onClose}
+    >
+      <style>{`
+        @keyframes lb-fade-in { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes lb-scale-in { from { opacity: 0; transform: scale(0.92) } to { opacity: 1; transform: scale(1) } }
+      `}</style>
+
+      <button
+        onClick={onClose}
+        className="absolute top-5 right-5 w-9 h-9 flex items-center justify-center border border-[#1E2D3D] text-[#607B96] hover:text-white hover:border-[#607B96] transition-colors text-lg leading-none"
+        style={{ background: "rgba(1,18,33,0.85)" }}
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+      <img
+        src={src}
+        alt={alt}
+        onClick={(e) => e.stopPropagation()}
+        className="max-w-full max-h-[90vh] rounded-lg border border-[#1E2D3D] object-contain shadow-2xl"
+        style={{ animation: "lb-scale-in 0.22s ease" }}
+      />
+    </div>
+  );
+}
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 
@@ -93,36 +139,36 @@ type TechId = (typeof techList)[number]["id"];
 const projects = [
   {
     num: 1,
-    slug: "_ui-workinginprogress",
-    description: "Duis aute irure dolor in velit esse cillum dolore.",
+    slug: "_odeum",
+    description: "Odeum is a decentralised audio streaming platform",
     tech: ["react"] as TechId[],
     BadgeIcon: ReactLogo,
-    imageStyle: {
-      background:
-        "linear-gradient(135deg, #0d0508 0%, #2a0a10 40%, #5c1515 70%, #6b2000 100%)",
-    },
+    image: odeumPhoto,
+    imageAlt: "Odeum project screenshot",
+    imageStyle: {} as React.CSSProperties,
   },
   {
     num: 2,
-    slug: "_ui-workinginprogress",
-    description: "Duis aute irure dolor in velit esse cillum dolore.",
+    slug: "_kanban-app",
+    description: "Manage your tasks using this kanban board",
     tech: ["react"] as TechId[],
     BadgeIcon: ReactLogo,
-    imageStyle: {
-      background:
-        "linear-gradient(135deg, #040412 0%, #0a0a35 45%, #18186a 75%, #1a0030 100%)",
-    },
+    image: kanbanApp,
+    imageAlt: "Kanban app screenshot",
+    imageStyle: {} as React.CSSProperties,
   },
   {
     num: 3,
-    slug: "_ui-workinginprogress",
+    slug: "_ui-workinprogress",
     description: "Duis aute irure dolor in velit esse cillum dolore.",
     tech: ["node"] as TechId[],
     BadgeIcon: VueLogo,
+    image: undefined as string | undefined,
+    imageAlt: "",
     imageStyle: {
       background:
         "linear-gradient(135deg, #031015 0%, #003344 50%, #005060 80%, #004a3a 100%)",
-    },
+    } as React.CSSProperties,
   },
 ];
 
@@ -136,6 +182,9 @@ export default function ProjectsPage({ onNavigate }: Props) {
   const [selected, setSelected] = useState<TechId[]>([]);
   const [sectionOpen, setSectionOpen] = useState(true);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const openLightbox = useCallback((src: string, alt: string) => setLightbox({ src, alt }), []);
+  const closeLightbox = useCallback(() => setLightbox(null), []);
 
   const toggle = (id: TechId) =>
     setSelected((prev) =>
@@ -304,7 +353,29 @@ export default function ProjectsPage({ onNavigate }: Props) {
                         style={{ background: "#011221" }}
                       >
                         {/* Image area */}
-                        <div className="relative h-[160px] sm:h-[170px]" style={project.imageStyle}>
+                        <div
+                          className={`relative h-[160px] sm:h-[170px] overflow-hidden${project.image ? " cursor-zoom-in group" : ""}`}
+                          style={project.imageStyle}
+                          onClick={project.image ? () => openLightbox(project.image!, project.imageAlt) : undefined}
+                          role={project.image ? "button" : undefined}
+                          tabIndex={project.image ? 0 : undefined}
+                          aria-label={project.image ? `View full image: ${project.imageAlt}` : undefined}
+                          onKeyDown={project.image ? (e) => { if (e.key === "Enter" || e.key === " ") openLightbox(project.image!, project.imageAlt); } : undefined}
+                        >
+                          {project.image && (
+                            <>
+                              <img
+                                src={project.image}
+                                alt={project.imageAlt}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-xs border border-white/40 px-3 py-1.5" style={{ background: "rgba(1,18,33,0.7)", backdropFilter: "blur(4px)" }}>
+                                  view full image
+                                </span>
+                              </div>
+                            </>
+                          )}
                           <div
                             className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center border border-[#1E2D3D]"
                             style={{ background: "rgba(1,18,33,0.75)", backdropFilter: "blur(4px)" }}
@@ -343,6 +414,8 @@ export default function ProjectsPage({ onNavigate }: Props) {
           </a>
         </footer>
       </div>
+
+      {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={closeLightbox} />}
     </>
   );
 }
