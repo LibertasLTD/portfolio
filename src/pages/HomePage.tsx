@@ -36,7 +36,7 @@ export default function HomePage({ onNavigate }: Props) {
 
         <main className="relative z-10 flex-1 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-8 px-6 sm:px-10 md:px-16 lg:px-24 py-12 lg:py-0">
           <div className="flex-1 max-w-xl w-full">
-            <p className="text-[#607B96] text-sm mb-3">Hi all, I am</p>
+            <p className="text-[#607B96] text-sm mb-3">I am</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-4">
               Kyle Allbright
             </h1>
