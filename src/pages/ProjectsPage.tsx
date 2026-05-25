@@ -159,20 +159,6 @@ const projects = [
     imageStyle: {} as React.CSSProperties,
     link: "https://kanban-board-lpx5oka44-kyle-allbright-s-projects.vercel.app/",
   },
-  {
-    num: 3,
-    slug: "_ui-workinprogress",
-    description: "Duis aute irure dolor in velit esse cillum dolore.",
-    tech: ["node"] as TechId[],
-    BadgeIcon: VueLogo,
-    image: undefined as string | undefined,
-    imageAlt: "",
-    imageStyle: {
-      background:
-        "linear-gradient(135deg, #031015 0%, #003344 50%, #005060 80%, #004a3a 100%)",
-    } as React.CSSProperties,
-    link: undefined as string | null | undefined,
-  },
 ];
 
 // ── Page ───────────────────────────────────────────────────────────────────────
