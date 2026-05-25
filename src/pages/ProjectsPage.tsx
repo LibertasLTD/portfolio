@@ -146,6 +146,7 @@ const projects = [
     image: odeumPhoto,
     imageAlt: "Odeum project screenshot",
     imageStyle: {} as React.CSSProperties,
+    link: null,
   },
   {
     num: 2,
@@ -156,6 +157,7 @@ const projects = [
     image: kanbanApp,
     imageAlt: "Kanban app screenshot",
     imageStyle: {} as React.CSSProperties,
+    link: "https://kanban-board-lpx5oka44-kyle-allbright-s-projects.vercel.app/",
   },
   {
     num: 3,
@@ -169,6 +171,7 @@ const projects = [
       background:
         "linear-gradient(135deg, #031015 0%, #003344 50%, #005060 80%, #004a3a 100%)",
     } as React.CSSProperties,
+    link: undefined as string | null | undefined,
   },
 ];
 
@@ -389,9 +392,24 @@ export default function ProjectsPage({ onNavigate }: Props) {
                           <p className="text-[#607B96] text-sm mb-4 sm:mb-5 leading-relaxed">
                             {project.description}
                           </p>
-                          <button className="px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors">
-                            view-project
-                          </button>
+                          {project.link === null ? (
+                            <span className="px-4 py-2 sm:py-[6px] text-xs text-[#607B96]/50 border border-[#1E2D3D]/50 cursor-not-allowed select-none">
+                              project-offline
+                            </span>
+                          ) : project.link ? (
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors"
+                            >
+                              view-project
+                            </a>
+                          ) : (
+                            <button className="px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors">
+                              view-project
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
