@@ -337,10 +337,12 @@ export default function AboutPage({ onNavigate }: Props) {
         <footer className="flex items-center gap-5 px-6 py-4 border-t border-[#1E2D3D] text-sm shrink-0">
           <span className="text-[#607B96]">find me on:</span>
           <a
-            href="https://uk.linkedin.com/in/kyleallbright"
-            aria-label="LinkedIn"
-            className="text-[#607B96] hover:text-white transition-colors border border-[#1E2D3D] p-[9px] hover:border-[#607B96]"
-          >
+                href="https://www.linkedin.com/in/your-profile"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#607B96] hover:text-white transition-colors border border-[#1E2D3D] p-[9px] hover:border-[#607B96]"
+              >
             <LinkedInIcon />
           </a>
         </footer>
