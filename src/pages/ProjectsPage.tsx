@@ -422,7 +422,7 @@ export default function ProjectsPage({ onNavigate }: Props) {
 
         {/* ── Footer ───────────────────────────────────────────────────────── */}
         <footer className="flex items-center gap-5 px-6 py-4 border-t border-[#1E2D3D] text-sm shrink-0">
-          <span className="text-[#607B96]">find me in:</span>
+          <span className="text-[#607B96]">find me on:</span>
           <a
               href="https://uk.linkedin.com/in/kyleallbright"
               aria-label="LinkedIn"
