@@ -3,6 +3,7 @@ import Nav from "../components/Nav";
 import type { Page } from "../types";
 import odeumPhoto from "../../img/odeum-photo.jpeg";
 import kanbanApp from "../../img/kanban-app.png";
+import perfumeApp from "../../img/jafafa-photo.png";
 
 // ── Lightbox ───────────────────────────────────────────────────────────────────
 
@@ -132,6 +133,7 @@ const techList = [
   { id: "angular", label: "Angular", Icon: AngularLogo },
   { id: "gatsby",  label: "Gatsby",  Icon: GatsbyLogo },
   { id: "flutter", label: "Flutter", Icon: FlutterLogo },
+  { id: "nextjs", label: "Next JS",  Icon: FlutterLogo },
 ] as const;
 
 type TechId = (typeof techList)[number]["id"];
@@ -139,14 +141,14 @@ type TechId = (typeof techList)[number]["id"];
 const projects = [
   {
     num: 1,
-    slug: "_odeum",
-    description: "Odeum is a decentralised audio streaming platform",
-    tech: ["react"] as TechId[],
+    slug: "_perfumer",
+    description:"Elegant perfume shop displaying a wide variety of next JS features.",
+    tech: ["nextjs"] as TechId[],
     BadgeIcon: ReactLogo,
-    image: odeumPhoto,
-    imageAlt: "Odeum project screenshot",
+    image: perfumeApp,
+    imageAlt: "Perfume app screenshot",
     imageStyle: {} as React.CSSProperties,
-    link: null,
+    link: "https://jafafa.vercel.app/"
   },
   {
     num: 2,
@@ -159,6 +161,18 @@ const projects = [
     imageStyle: {} as React.CSSProperties,
     link: "https://kanban-board-lpx5oka44-kyle-allbright-s-projects.vercel.app/",
   },
+  {
+    num: 3,
+    slug: "_odeum",
+    description: "Odeum is a decentralised audio platform. Project Offline",
+    tech: ["react"] as TechId[],
+    BadgeIcon: ReactLogo,
+    image: odeumPhoto,
+    imageAlt: "Odeum project screenshot",
+    imageStyle: {} as React.CSSProperties,
+    link: "https://github.com/LibertasLTD/Odeum-Frontend",
+  },
+
 ];
 
 // ── Page ───────────────────────────────────────────────────────────────────────
@@ -204,7 +218,7 @@ export default function ProjectsPage({ onNavigate }: Props) {
 
         <main className="flex-1 flex flex-col md:flex-row min-h-0">
 
-          {/* ── Mobile filter panel (below md) ──────────────────────────────── */}
+          {/* ── Mobile filter p anel (below md) ──────────────────────────────── */}
           <div className="md:hidden border-b border-[#1E2D3D] shrink-0 text-sm">
             <button
               onClick={() => setMobileFiltersOpen((v) => !v)}
