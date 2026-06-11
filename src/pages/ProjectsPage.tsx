@@ -4,6 +4,7 @@ import type { Page } from "../types";
 import odeumPhoto from "../../img/odeum-photo.jpeg";
 import kanbanApp from "../../img/kanban-app.png";
 import perfumeApp from "../../img/jafafa-photo.png";
+import perfectionApp from "../../img/perfection.png";
 
 // ── Lightbox ───────────────────────────────────────────────────────────────────
 
@@ -171,6 +172,17 @@ const projects = [
     imageAlt: "Odeum project screenshot",
     imageStyle: {} as React.CSSProperties,
     link: "https://github.com/LibertasLTD/Odeum-Frontend",
+  },
+  {
+    num: 4,
+    slug: "_perfection",
+    description: "Lithos — layers hold tales of time. An interactive React experience.",
+    tech: ["react"] as TechId[],
+    BadgeIcon: ReactLogo,
+    image: perfectionApp,
+    imageAlt: "Perfection project screenshot",
+    imageStyle: {} as React.CSSProperties,
+    link: "https://perfection-liard.vercel.app/",
   },
 
 ];
