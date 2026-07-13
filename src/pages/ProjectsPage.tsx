@@ -5,6 +5,7 @@ import odeumPhoto from "../../img/odeum-photo.jpeg";
 import kanbanApp from "../../img/kanban-app.png";
 import perfumeApp from "../../img/jafafa-photo.png";
 import perfectionApp from "../../img/perfection.png";
+import abyssApp from "../../img/the-abyss.png";
 
 // ── Lightbox ───────────────────────────────────────────────────────────────────
 
@@ -183,6 +184,17 @@ const projects = [
     imageAlt: "Perfection project screenshot",
     imageStyle: {} as React.CSSProperties,
     link: "https://perfection-liard.vercel.app/",
+  },
+  {
+    num: 5,
+    slug: "_the-abyss",
+    description: "The Abyss — an immersive deep-sea journey built with Next JS.",
+    tech: ["nextjs"] as TechId[],
+    BadgeIcon: ReactLogo,
+    image: abyssApp,
+    imageAlt: "The Abyss project screenshot",
+    imageStyle: {} as React.CSSProperties,
+    link: "https://the-abyss-mu.vercel.app/",
   },
 
 ];
