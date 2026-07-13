@@ -366,7 +366,7 @@ export default function ProjectsPage({ onNavigate }: Props) {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-5xl">
                   {filtered.map((project) => (
-                    <div key={project.num}>
+                    <div key={project.num} className="flex flex-col h-full">
                       {/* Title above card */}
                       <p className="text-sm mb-3">
                         <span style={{ color: "#FEA55F" }}>Project {project.num}</span>
@@ -376,12 +376,12 @@ export default function ProjectsPage({ onNavigate }: Props) {
 
                       {/* Card */}
                       <div
-                        className="rounded-lg border border-[#1E2D3D] overflow-hidden"
+                        className="flex flex-col flex-1 rounded-lg border border-[#1E2D3D] overflow-hidden"
                         style={{ background: "#011221" }}
                       >
                         {/* Image area */}
                         <div
-                          className={`relative h-[160px] sm:h-[170px] overflow-hidden${project.image ? " cursor-zoom-in group" : ""}`}
+                          className={`relative h-[160px] sm:h-[170px] shrink-0 overflow-hidden${project.image ? " cursor-zoom-in group" : ""}`}
                           style={project.imageStyle}
                           onClick={project.image ? () => openLightbox(project.image!, project.imageAlt) : undefined}
                           role={project.image ? "button" : undefined}
@@ -412,12 +412,12 @@ export default function ProjectsPage({ onNavigate }: Props) {
                         </div>
 
                         {/* Content */}
-                        <div className="p-4 sm:p-5">
-                          <p className="text-[#607B96] text-sm mb-4 sm:mb-5 leading-relaxed">
+                        <div className="flex flex-col flex-1 p-4 sm:p-5">
+                          <p className="flex-1 text-[#607B96] text-sm mb-4 sm:mb-5 leading-relaxed">
                             {project.description}
                           </p>
                           {project.link === null ? (
-                            <span className="px-4 py-2 sm:py-[6px] text-xs text-[#607B96]/50 border border-[#1E2D3D]/50 cursor-not-allowed select-none">
+                            <span className="self-start px-4 py-2 sm:py-[6px] text-xs text-[#607B96]/50 border border-[#1E2D3D]/50 cursor-not-allowed select-none">
                               project-offline
                             </span>
                           ) : project.link ? (
@@ -425,12 +425,12 @@ export default function ProjectsPage({ onNavigate }: Props) {
                               href={project.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-block px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors"
+                              className="self-start inline-block px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors"
                             >
                               view-project
                             </a>
                           ) : (
-                            <button className="px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors">
+                            <button className="self-start px-4 py-2 sm:py-[6px] text-xs text-[#607B96] border border-[#1E2D3D] hover:border-[#607B96] hover:text-white transition-colors">
                               view-project
                             </button>
                           )}
